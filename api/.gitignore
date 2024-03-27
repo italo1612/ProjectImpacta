@@ -1,0 +1,43 @@
+# Arquivos de compilação
+*.o
+*.out
+*.exe
+
+# Arquivos de dependências
+*.jar
+*.war
+*.ear
+*.pyc
+*.class
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de configuração
+*.log
+*.ini
+*.config
+package.json
+package-lock.json
+yarn.lock
+# Arquivos de ambiente
+.env
+
+# Arquivos de construção de IDEs
+.idea/
+.vscode/
+
+# Dependências
+/node_modules/
+/bower_components/
+
+# Arquivos de saída de build
+/build/
+/dist/
+/out/
+
+# Logs e arquivos temporários
+/log/
+/temp/
+/tmp/
