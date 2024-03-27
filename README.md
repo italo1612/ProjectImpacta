@@ -1,1 +1,1 @@
-Projeto desenvolido para a faculdade impacta
+Projeto desenvolvido para a faculdade impacta
