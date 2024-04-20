@@ -36,7 +36,6 @@ yarn.lock
 /build/
 /dist/
 /out/
-
 # Logs e arquivos temporários
 /log/
 /temp/
