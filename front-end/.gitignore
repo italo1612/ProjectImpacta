@@ -18,6 +18,9 @@ Thumbs.db
 *.log
 *.ini
 *.config
+package.json
+package-lock.json
+yarn.lock
 
 # Arquivos de ambiente
 .env

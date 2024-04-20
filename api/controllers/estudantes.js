@@ -27,3 +27,22 @@ export const addEstudante = (req, res) => {
         return res.status(200).json("Estudante criado com sucesso!")
     })
 }
+
+export const updateEstudante = (req, res) => {
+    const q = 
+    "UPDATE estudantes SET `nome` = ?, `email` = ?, `fone` = ?, `data_nasc` = ? WHERE `id` = ?"
+
+    const values = [
+      req.body.nome,
+      req.body.email,
+      req.body.fone,
+      req.body.data_nasc,
+      
+    ]
+    db.query(q, [...values, req.params.id], (err) => {
+      if(err) return res.json(err)
+
+      return res.status(200).json("Estudante atualizado com sucesso!")
+  })
+}
+

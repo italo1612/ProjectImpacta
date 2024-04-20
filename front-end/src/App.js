@@ -49,7 +49,7 @@ function App() {
       <Container>
         <Title>Estudantes</Title>
         <Form onEdit={onEdit} setOnEdit={setOnEdit} getEstudantes={getEstudantes}></Form>
-        <Grid estudantes={estudantes} />
+        <Grid estudantes={estudantes} setOnEdit={setOnEdit} />
       </Container>
       {/* <ToastContainer autoClose={3000} position={toast.POSITION.BOTTOM_LEFT} /> */}
       <Global />

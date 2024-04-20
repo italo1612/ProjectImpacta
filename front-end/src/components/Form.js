@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -36,25 +36,63 @@ const Button = styled.button`
   color: white;
   height: 42px;
 `;
-const Form = ({ onEdit, getEstudantes }) => {
+const Form = ({ onEdit, getEstudantes, setOnEdit }) => {
   const ref = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const estudante = ref.current;
 
-    await axios
-      .post('http://localhost:8800', {
-        nome: estudante.nome.value,
-        email: estudante.email.value,
-        fone: estudante.fone.value,
-        data_nasc: estudante.data_nasc.value,
-      })
-      .then(({ data }) => alert(data))
-      .catch(({ data }) => alert(data));
+    if (
+      !estudante.nome.value ||
+      !estudante.email.value ||
+      !estudante.fone.value ||
+      !estudante.data_nasc.value
+    ) {
+      return alert('Preencha todos os campos!');
+    }
+    if (onEdit) {
+      await axios
+        .put('http://localhost:8800/' + onEdit.id, {
+          nome: estudante.nome.value,
+          email: estudante.email.value,
+          fone: estudante.fone.value,
+          data_nasc: estudante.data_nasc.value,
+        })
+        .then(({ data }) => alert(data))
+        .catch(({ data }) => alert('error ao atualizar'));
+    } else {
+      await axios
+        .post('http://localhost:8800', {
+          nome: estudante.nome.value,
+          email: estudante.email.value,
+          fone: estudante.fone.value,
+          data_nasc: estudante.data_nasc.value,
+        })
+        .then(({ data }) => alert(data))
+        .catch(({ data }) => alert('error ao criar'));
 
+      getEstudantes();
+    }
+    estudante.nome.value = '';
+    estudante.email.value = '';
+    estudante.fone.value = '';
+    estudante.data_nasc.value = '';
+
+    setOnEdit(null);
     getEstudantes();
   };
+
+  useEffect(() => {
+    if (onEdit) {
+      const estudante = ref.current;
+
+      estudante.nome.value = onEdit.nome;
+      estudante.email.value = onEdit.email;
+      estudante.fone.value = onEdit.fone;
+      estudante.data_nasc.value = onEdit.data_nasc;
+    }
+  }, [onEdit]);
   return (
     <FormContainer ref={ref} onSubmit={handleSubmit}>
       <InputArea>
@@ -74,7 +112,7 @@ const Form = ({ onEdit, getEstudantes }) => {
         <Input name='data_nasc' type='date' />
       </InputArea>
 
-      <Button type='submit'>Criar</Button>
+      <Button type='submit'>{onEdit ? 'Salvar' : 'Criar'}</Button>
     </FormContainer>
   );
 };

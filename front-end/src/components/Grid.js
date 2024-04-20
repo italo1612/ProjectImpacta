@@ -37,7 +37,12 @@ export const Th = styled.th`
   }
 `;
 
-const Grid = ({estudantes}) => {
+
+const Grid = ({estudantes, setOnEdit}) => {
+
+  const handleEdit = (item) => {
+    setOnEdit(item)
+  }
   return (
     <Table>
       <Thead>
@@ -55,7 +60,7 @@ const Grid = ({estudantes}) => {
             <Td width='30%'>{item.nome}</Td>
             <Td width='30%'>{item.email}</Td>
             <Td width='20%'>{item.fone}</Td>
-            <Td  width='5%'><FaEdit/></Td>
+            <Td  width='5%'><FaEdit onClick={()=> handleEdit(item)} /></Td>
             <Td  width='5%'><FaTrash/></Td>
           </Tr>
         ))}
