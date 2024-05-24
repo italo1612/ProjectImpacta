@@ -46,3 +46,13 @@ export const updateEstudante = (req, res) => {
   })
 }
 
+export const deleteEstudante = (req, res ) => {
+   const q =  "DELETE FROM estudantes WHERE `id` = ?"
+
+   db.query(q, [req.params.id], (err) => {
+    if(err) return res.json(err)
+
+      return res.status(200).json("Estudante deletado com sucesso.")
+   })
+}
+

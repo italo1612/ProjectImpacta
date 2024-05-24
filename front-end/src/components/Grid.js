@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 export const Table = styled.table`
   width: 100%;
@@ -38,10 +39,22 @@ export const Th = styled.th`
 `;
 
 
-const Grid = ({estudantes, setOnEdit}) => {
+const Grid = ({estudantes, setOnEdit, setEstudantes}) => {
 
   const handleEdit = (item) => {
     setOnEdit(item)
+  }
+
+  const handleDelete = async (id) => {
+    await axios.delete("http://localhost:8800/" + id)
+    .then(({data}) => {
+      const array = estudantes.filter((estudante) => estudante.id !== id)
+
+      setEstudantes(array)
+      alert('Estudante deletado com sucesso!')
+    }).catch(({data}) => alert('Erro ao deletar Estudante'))
+
+    setOnEdit(null)
   }
   return (
     <Table>
@@ -61,7 +74,7 @@ const Grid = ({estudantes, setOnEdit}) => {
             <Td width='30%'>{item.email}</Td>
             <Td width='20%'>{item.fone}</Td>
             <Td  width='5%'><FaEdit onClick={()=> handleEdit(item)} /></Td>
-            <Td  width='5%'><FaTrash/></Td>
+            <Td  width='5%'><FaTrash onClick={() => handleDelete(item.id)} /></Td>
           </Tr>
         ))}
       </Tbody>
