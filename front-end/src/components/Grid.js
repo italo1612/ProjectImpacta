@@ -42,6 +42,7 @@ export const Th = styled.th`
 const Grid = ({estudantes, setOnEdit, setEstudantes}) => {
 
   const handleEdit = (item) => {
+    console.log(item)
     setOnEdit(item)
   }
 
@@ -61,16 +62,18 @@ const Grid = ({estudantes, setOnEdit, setEstudantes}) => {
       <Thead>
         <Tr>
           <Th>Nome</Th>
+          <Th>Nota</Th>
           <Th>Email</Th>
           <Th >Fone</Th>
           <Th></Th>
-          <Th></Th>
+    
         </Tr>
       </Thead>
       <Tbody>
         {estudantes.map((item, i) => (
           <Tr key={i}>
             <Td width='30%'>{item.nome}</Td>
+            <Td width='10%'>{item.nota}</Td>
             <Td width='30%'>{item.email}</Td>
             <Td width='20%'>{item.fone}</Td>
             <Td  width='5%'><FaEdit onClick={()=> handleEdit(item)} /></Td>

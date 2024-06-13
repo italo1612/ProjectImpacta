@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const FormContainer = styled.form`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   align-items: flex-end;
   gap: 1rem;
@@ -12,15 +13,16 @@ const FormContainer = styled.form`
   background-color: #fff;
   border-radius: 5px;
 
-  padding: 20px;
+  padding: 0 20px;
 `;
 const InputArea = styled.div`
   display: flex;
   flex-direction: column;
 `;
 const Input = styled.input`
-  width: 120px;
+  width: 110px;
   padding: 0 10px;
+  
   border: 1px solid #bbb;
   border-radius: 5px;
   height: 40px;
@@ -31,6 +33,11 @@ const Button = styled.button`
   padding: 10px 1rem;
   cursor: pointer;
   border: none;
+  display: flex;
+  width: 95%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
   border-radius: 10px;
   background-color: #2c73d2;
   color: white;
@@ -58,6 +65,7 @@ const Form = ({ onEdit, getEstudantes, setOnEdit }) => {
           email: estudante.email.value,
           fone: estudante.fone.value,
           data_nasc: estudante.data_nasc.value,
+          nota: estudante.nota.value,
         })
         .then(({ data }) => alert(data))
         .catch(({ data }) => alert('error ao atualizar'));
@@ -68,6 +76,7 @@ const Form = ({ onEdit, getEstudantes, setOnEdit }) => {
           email: estudante.email.value,
           fone: estudante.fone.value,
           data_nasc: estudante.data_nasc.value,
+          nota: estudante.nota.value,
         })
         .then(({ data }) => alert(data))
         .catch((error) => {
@@ -85,6 +94,8 @@ const Form = ({ onEdit, getEstudantes, setOnEdit }) => {
     estudante.email.value = '';
     estudante.fone.value = '';
     estudante.data_nasc.value = '';
+    estudante.nota.value = '';
+    
 
     setOnEdit(null);
     getEstudantes();
@@ -98,6 +109,7 @@ const Form = ({ onEdit, getEstudantes, setOnEdit }) => {
       estudante.email.value = onEdit.email;
       estudante.fone.value = onEdit.fone;
       estudante.data_nasc.value = onEdit.data_nasc;
+      estudante.nota.value = onEdit.nota;
     }
   }, [onEdit]);
   return (
@@ -105,6 +117,10 @@ const Form = ({ onEdit, getEstudantes, setOnEdit }) => {
       <InputArea>
         <Label>Nome</Label>
         <Input name='nome' />
+      </InputArea>
+      <InputArea>
+        <Label>Nota</Label>
+        <Input name='nota' />
       </InputArea>
       <InputArea>
         <Label>E-mail</Label>
