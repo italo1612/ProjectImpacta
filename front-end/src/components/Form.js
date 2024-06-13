@@ -70,7 +70,14 @@ const Form = ({ onEdit, getEstudantes, setOnEdit }) => {
           data_nasc: estudante.data_nasc.value,
         })
         .then(({ data }) => alert(data))
-        .catch(({ data }) => alert('error ao criar'));
+        .catch((error) => {
+          if (error.response && error.response.status === 409) {
+            alert('Estudante já cadastrado com esse email.')
+            return
+          }
+          alert('error ao criar')
+        
+        });
 
       getEstudantes();
     }

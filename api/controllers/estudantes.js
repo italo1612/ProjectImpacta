@@ -10,23 +10,49 @@ export const getEstudantes = (_, res) => {
   });
 };
 
-export const addEstudante = (req, res) => {
-    const q = "INSERT INTO estudantes (`nome`, `email`, `fone`, `data_nasc`) VALUES(?)"
+// export const addEstudante = (req, res) => {
+//     const q = "INSERT INTO estudantes (`nome`, `email`, `fone`, `data_nasc`) VALUES(?)"
 
-    const values = [ 
-        req.body.nome,
-        req.body.email,
-        req.body.fone,
-        req.body.data_nasc,
+//     const values = [ 
+//         req.body.nome,
+//         req.body.email,
+//         req.body.fone,
+//         req.body.data_nasc,
         
-    ]
+//     ]
 
-    db.query(q, [values], (err) => {
-        if(err) return res.json(err)
+//     db.query(q, [values], (err) => {
+//         if(err) return res.json(err)
 
-        return res.status(200).json("Estudante criado com sucesso!")
-    })
-}
+//         return res.status(200).json("Estudante criado com sucesso!")
+//     })
+// }
+export const addEstudante = (req, res) => {
+  const { nome, email, fone, data_nasc } = req.body;
+
+  const checkQuery = "SELECT * FROM estudantes WHERE email = ?";
+
+  db.query(checkQuery, [email], (err, results) => {
+      if (err) {
+          return res.status(500).json({ error: "Erro ao verificar duplicidade: " + err.message });
+      }
+
+      if (results.length > 0) {
+          return res.status(409).json({ message: "Estudante já cadastrado com esse email." });
+      }
+
+      const insertQuery = "INSERT INTO estudantes (`nome`, `email`, `fone`, `data_nasc`) VALUES (?)";
+      const values = [nome, email, fone, data_nasc];
+
+      db.query(insertQuery, [values], (err) => {
+          if (err) {
+              return res.status(500).json({ error: "Erro ao inserir estudante: " + err.message });
+          }
+
+          return res.status(200).json("Estudante criado com sucesso!");
+      });
+  });
+};
 
 export const updateEstudante = (req, res) => {
     const q = 
